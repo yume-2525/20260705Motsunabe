@@ -145,4 +145,11 @@ function _showFallback(title, hint) {
 }
 
 // ── 起動 ─────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', main);
+// スプラッシュのボタンタップ（ユーザージェスチャー）後に AR を開始する
+// モバイルブラウザはユーザー操作なしのカメラ起動を拒否するため
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('splash-btn').addEventListener('click', async () => {
+    document.getElementById('splash').classList.add('hidden');
+    await main();
+  });
+});

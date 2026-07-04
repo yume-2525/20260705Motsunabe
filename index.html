@@ -7,12 +7,22 @@
   <title>あしあと - AR MAP</title>
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Three.js r150 -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
-  <!-- MindAR Image Tracking (Three.js backend) -->
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"></script>
+  <!-- ライブラリをローカルから読み込み（CDN 障害・モバイル遅延対策） -->
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/mindar-image-three.prod.js"></script>
 </head>
 <body>
+
+  <!-- ── スプラッシュ画面（タップでカメラ開始） ── -->
+  <div id="splash">
+    <div id="splash-inner">
+      <p id="splash-app-name">星集めの宿</p>
+      <p id="splash-title">あしあと</p>
+      <p id="splash-sub">AR MAP</p>
+      <button id="splash-btn">📸 カメラを起動する</button>
+      <p id="splash-hint">地図にかざすと<br>思い出のチェキが現れます</p>
+    </div>
+  </div>
 
   <!-- ── AR レンダリング領域 ── -->
   <div id="ar-container"></div>

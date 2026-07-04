@@ -14,7 +14,7 @@ async function main() {
     await initAR(container, TARGET_SRC, _onTargetFound, _onTargetLost);
   } catch (err) {
     console.error('[AR] init failed:', err);
-    _showFallback('カメラの初期化に失敗しました', 'assets/targets.mind が正しく配置されているか、\nHTTPS 環境で開いているか確認してください。');
+    _showFallback('カメラの初期化に失敗しました', '【エラー詳細】\n' + String(err));
     return;
   }
 
@@ -120,7 +120,7 @@ async function main() {
     await startAR();
   } catch (err) {
     console.error('[AR] start failed:', err);
-    _showFallback('カメラを起動できませんでした', 'カメラの使用を許可してから\nページを再読み込みしてください。');
+    _showFallback('カメラを起動できませんでした', '【エラー詳細】\n' + String(err));
   }
 }
 

@@ -3,19 +3,26 @@
 // =====================================================================
 
 const TARGET_SRC = 'assets/targets.mind';
+const APP_VERSION = 'v8';
 
 let _targetFound = false;
 
 async function main() {
   const container = document.getElementById('ar-container');
 
-  // ── ライブラリ読み込み確認 ────────────────────────────────────
-  if (typeof THREE === 'undefined') {
-    _showFallback('読み込みエラー', '【詳細】Three.js が読み込まれていません。\nネットワーク接続を確認してページを再読み込みしてください。');
-    return;
-  }
-  if (!window.MINDAR || !window.MINDAR.IMAGE) {
-    _showFallback('読み込みエラー', '【詳細】MindAR が読み込まれていません。\nネットワーク接続を確認してページを再読み込みしてください。\n(MINDAR=' + typeof window.MINDAR + ')');
+  // ── ライブラリ・スクリプト読み込み確認 ───────────────────────
+  var checks = [
+    ['THREE',    typeof THREE    !== 'undefined'],
+    ['MINDAR',   typeof window.MINDAR !== 'undefined' && !!window.MINDAR.IMAGE],
+    ['initAR',   typeof initAR   === 'function'],
+    ['addChekiMesh', typeof addChekiMesh === 'function'],
+    ['getUserCards', typeof getUserCards === 'function'],
+  ];
+  var failed = checks.filter(function(c){ return !c[1]; });
+  if (failed.length > 0) {
+    var names = failed.map(function(c){ return c[0]; }).join(', ');
+    _showFallback('スクリプト読み込みエラー ' + APP_VERSION,
+      '未定義: ' + names + '\n\nページを完全に再読み込みしてください\n（Safari: アドレスバーを引っ張って更新）');
     return;
   }
 
@@ -24,7 +31,7 @@ async function main() {
     await initAR(container, TARGET_SRC, _onTargetFound, _onTargetLost);
   } catch (err) {
     console.error('[AR] init failed:', err);
-    _showFallback('カメラの初期化に失敗しました', '【エラー詳細】\n' + String(err));
+    _showFallback('カメラの初期化に失敗しました ' + APP_VERSION, '【エラー詳細】\n' + String(err));
     return;
   }
 

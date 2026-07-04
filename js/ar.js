@@ -112,8 +112,8 @@ function _makeMesh(texture, pos) {
     depthTest: false,
   });
   const mesh = new THREE.Mesh(geo, mat);
-  mesh.position.set(pos.x, pos.y, pos.z ?? 0);
-  mesh.rotation.z = pos.rotation ?? 0;
+  mesh.position.set(pos.x, pos.y, pos.z !== undefined ? pos.z : 0);
+  mesh.rotation.z = pos.rotation !== undefined ? pos.rotation : 0;
   return mesh;
 }
 

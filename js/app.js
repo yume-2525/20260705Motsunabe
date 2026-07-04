@@ -9,6 +9,16 @@ let _targetFound = false;
 async function main() {
   const container = document.getElementById('ar-container');
 
+  // ── ライブラリ読み込み確認 ────────────────────────────────────
+  if (typeof THREE === 'undefined') {
+    _showFallback('読み込みエラー', '【詳細】Three.js が読み込まれていません。\nネットワーク接続を確認してページを再読み込みしてください。');
+    return;
+  }
+  if (!window.MINDAR || !window.MINDAR.IMAGE) {
+    _showFallback('読み込みエラー', '【詳細】MindAR が読み込まれていません。\nネットワーク接続を確認してページを再読み込みしてください。\n(MINDAR=' + typeof window.MINDAR + ')');
+    return;
+  }
+
   // ── AR 初期化 ─────────────────────────────────────────────────
   try {
     await initAR(container, TARGET_SRC, _onTargetFound, _onTargetLost);

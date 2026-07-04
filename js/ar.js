@@ -123,7 +123,7 @@ function removeChekiMesh(cardId) {
   if (!mesh) return;
   _anchor.group.remove(mesh);
   mesh.geometry.dispose();
-  mesh.material.map?.dispose();
+  if (mesh.material.map) mesh.material.map.dispose();
   mesh.material.dispose();
   _meshMap.delete(cardId);
 }
